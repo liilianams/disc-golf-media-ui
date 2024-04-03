@@ -49,7 +49,7 @@ const ListItemButtonStyled: React.FC<ListItemButtonStyledProps> = ({ href, label
 
 const PrimaryItems: React.FC<ItemProps> = ({ isAuthenticated }) => {
   const routes: RouteItem[] = [
-    { href: '/', label: 'Main', icon: VideoLibrary, condition: true },
+    { href: '/videos', label: 'Videos', icon: VideoLibrary, condition: true },
     { href: '/favorites', label: 'Favorites', icon: Star, condition: isAuthenticated }
   ];
 

@@ -5,6 +5,7 @@ import React, { createContext, ReactNode, useContext, useState } from 'react';
 type DrawerContextType = {
   isOpen: boolean;
   onToggleDrawer: () => void;
+  // eslint-disable-next-line no-unused-vars
   handleDrawerButtonClick: (isSmallScreen: boolean) => void;
 };
 

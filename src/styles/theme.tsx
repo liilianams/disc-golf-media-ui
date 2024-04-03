@@ -1,7 +1,6 @@
-'use client';
-
-import * as React from 'react';
 import { createTheme, Theme } from '@mui/material/styles';
+import Link, { LinkProps } from 'next/link';
+import { forwardRef } from 'react';
 
 declare module '@mui/material/styles/createTypography' {
   interface Typography {
@@ -13,24 +12,31 @@ declare module '@mui/material/styles/createTypography' {
   }
 }
 
-// const LinkBehavior = React.forwardRef<HTMLAnchorElement, Omit<LinkProps, 'to'> & { href: LinkProps['to'] }>((props, ref) => {
-//   const { href, ...other } = props;
-//   return <Link ref={ref} to={href} {...other} role={undefined}/>;
-// });
+const LinkBehaviour = forwardRef<HTMLAnchorElement, LinkProps>(function LinkBehaviour(props, ref) {
+  return (
+    <Link ref={ref} {...props} />
+  );
+});
 
-const DefaultTheme: Theme = createTheme({
+// eslint-disable-next-line
+const theme: Theme = createTheme({
   palette: {
     grey: {
       500: '#A5A5A5',
-    }
+    },
+    background: {
+      default: '#F5F5F5',
+    },
   },
   typography: {
     secondaryFontSize: '0.75rem',
   },
   components: {
-    // MuiButtonBase: {
-    //   defaultProps: { LinkComponent: LinkBehavior },
-    // },
+    MuiButtonBase: {
+      defaultProps: {
+        LinkComponent: LinkBehaviour
+      }
+    },
     MuiAppBar: {
       styleOverrides: {
         root: {
@@ -48,4 +54,4 @@ const DefaultTheme: Theme = createTheme({
   },
 });
 
-export default DefaultTheme;
+export default theme;
