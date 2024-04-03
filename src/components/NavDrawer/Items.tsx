@@ -6,6 +6,7 @@ import * as React from 'react';
 import { useState } from 'react';
 import { useSmallBreakpoint } from '@src/utils/hooks';
 import { convertDisplayStringToIdString } from '@src/utils/helpers';
+import { useDrawer } from '@src/contexts/DrawerContext';
 
 type RouteItem = {
   href?: string;
@@ -28,12 +29,8 @@ type ListItemButtonStyledProps = {
 }
 
 const ListItemButtonStyled: React.FC<ListItemButtonStyledProps> = ({ href, label, icon, onClick }) => {
-  // const { handleDrawerButtonClick } = useDrawer();
+  const { handleDrawerButtonClick } = useDrawer();
   const isSmallScreen = useSmallBreakpoint();
-
-  const handleDrawerButtonClick = (isSmallScreen: boolean) => {
-    console.log('handleDrawerButtonClick');
-  }
 
   const hrefProp = href !== undefined ? { href } : {};
 

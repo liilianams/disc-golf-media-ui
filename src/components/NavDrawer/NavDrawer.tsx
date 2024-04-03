@@ -6,6 +6,7 @@ import * as React from 'react';
 import { DRAWER_WIDTH, SMALL_SCREEN_BREAKPOINT } from '@src/utils/constants';
 import { PrimaryItems, SecondaryItems } from './Items';
 import { useSmallBreakpoint } from '@src/utils/hooks';
+import { useDrawer } from '@src/contexts/DrawerContext';
 
 const DrawerStyled = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' })(
   ({ theme, open }) => ({
@@ -35,7 +36,7 @@ const DrawerStyled = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== '
 
 const NavDrawer: React.FC = () => {
   // const { isAuthenticated } = useAuth();
-  // const { isOpen, onToggleDrawer } = useDrawer();
+  const { isOpen, onToggleDrawer } = useDrawer();
   const isSmallScreen = useSmallBreakpoint();
 
   const drawerContents = (
@@ -55,7 +56,7 @@ const NavDrawer: React.FC = () => {
       <Box component="nav" sx={{ position: 'absolute', bottom: '0', mb: 1, width: '100%' }}>
         <Divider/>
         <List component="nav">
-          <SecondaryItems isAuthenticated={true} isOpen={true}/>
+          <SecondaryItems isAuthenticated={true} isOpen={isOpen}/>
         </List>
       </Box>
     </>
@@ -68,13 +69,13 @@ const NavDrawer: React.FC = () => {
           variant="temporary"
           sx={{ flexShrink: 0, width: DRAWER_WIDTH }}
           anchor="left"
-          open={true}
-          onClose={() => console.log('Opening/closing drawer')}
+          open={isOpen}
+          onClose={onToggleDrawer}
         >
           {drawerContents}
         </Drawer>
       ) : (
-        <DrawerStyled variant="permanent" open={true}>
+        <DrawerStyled variant="permanent" open={isOpen}>
           {drawerContents}
         </DrawerStyled>
       )}

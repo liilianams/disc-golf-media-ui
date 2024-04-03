@@ -1,6 +1,6 @@
 'use client';
 
-import { Login, Menu } from '@mui/icons-material';
+import { AccountCircle, Login, Menu } from '@mui/icons-material';
 import { Box, IconButton, Toolbar, Typography } from '@mui/material';
 import AppBar from '@mui/material/AppBar';
 import * as React from 'react';
@@ -8,10 +8,12 @@ import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import { useSmallBreakpoint } from '../utils/hooks';
 import BasketIcon from './BasketIcon';
 import { useRouter } from 'next/navigation';
+import { useDrawer } from '@src/contexts/DrawerContext';
 
 const TopBar: React.FC = () => {
   // const { isAuthenticated } = useAuth();
-  // const { isOpen, onToggleDrawer } = useDrawer();
+  const isAuthenticated = true; // replace with useAuth();
+  const { isOpen, onToggleDrawer } = useDrawer();
   const router = useRouter();
   const isSmallScreen = useSmallBreakpoint();
   const marginRight = '36px';
@@ -23,10 +25,10 @@ const TopBar: React.FC = () => {
           edge="start"
           color="inherit"
           aria-label="close drawer"
-          onClick={() => console.log('Closing drawer via TopBar')} // Replace with onToggleDrawer
+          onClick={onToggleDrawer}
           sx={{
             marginRight: marginRight,
-            // ...(!isOpen && { display: 'none' }),
+            ...(!isOpen && { display: 'none' }),
           }}
         >
           <ChevronLeftIcon/>
@@ -35,10 +37,10 @@ const TopBar: React.FC = () => {
           edge="start"
           color="inherit"
           aria-label="open drawer"
-          onClick={() => console.log('Opening drawer via TopBar')} // Replace with onToggleDrawer
+          onClick={onToggleDrawer}
           sx={{
             marginRight: marginRight,
-            // ...(isOpen && { display: 'none' }),
+            ...(isOpen && { display: 'none' }),
           }}
         >
           <Menu/>
@@ -63,18 +65,15 @@ const TopBar: React.FC = () => {
             Disc Golf Media
           </Typography>
         </Box>
+        {isAuthenticated ? (
+          <IconButton href="/account" color="inherit" sx={{ p: 0 }} aria-label="view account">
+            <AccountCircle/>
+          </IconButton>
+        ) : (
           <IconButton href="/login" color="inherit" sx={{ p: 0 }} aria-label="log in">
             <Login/>
           </IconButton>
-        {/*{isAuthenticated ? (*/}
-        {/*  <IconButton href="/account" color="inherit" sx={{ p: 0 }} aria-label="view account">*/}
-        {/*    <AccountCircle/>*/}
-        {/*  </IconButton>*/}
-        {/*) : (*/}
-        {/*  <IconButton href="/login" color="inherit" sx={{ p: 0 }} aria-label="log in">*/}
-        {/*    <Login/>*/}
-        {/*  </IconButton>*/}
-        {/*)}*/}
+        )}
       </Toolbar>
     </AppBar>
   );
