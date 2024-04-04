@@ -78,7 +78,7 @@ const SecondaryItems: React.FC<ItemProps> = ({ isAuthenticated, isOpen }) => {
 
   return (
     <>
-      {isAuthenticated && <ListSubheader component="div" inset={!isOpen}>Settings</ListSubheader>}
+      {isAuthenticated && <ListSubheader component="div" sx={{ opacity: isOpen ? 1 : 0 }}>Settings</ListSubheader>}
       {routes.map(route => route.condition && (
         <ListItemButtonStyled
           key={convertDisplayStringToIdString(route.label)}
