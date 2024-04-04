@@ -8,6 +8,7 @@ import TopBar from '@src/components/TopBar';
 import Main from '@src/components/Main';
 import { DrawerProvider } from '@src/contexts/DrawerContext';
 import ThemeRegistry from '@src/components/ThemeRegistry';
+import { FavoritesProvider } from '@src/contexts/FavoritesContext';
 
 export const metadata: Metadata = {
   title: "Disc Golf Media",
@@ -19,17 +20,19 @@ const RootLayout = ({ children }: { children: ReactNode }) => {
     <html lang="en">
       <head/>
       <body>
-        <DrawerProvider>
-          <ThemeRegistry>
-            <Box sx={{ display: 'flex' }}>
-              <TopBar/>
-              <NavDrawer/>
-              <Main>
-                {children}
-              </Main>
-            </Box>
-          </ThemeRegistry>
-        </DrawerProvider>
+        <FavoritesProvider>
+          <DrawerProvider>
+            <ThemeRegistry>
+              <Box sx={{ display: 'flex' }}>
+                <TopBar/>
+                <NavDrawer/>
+                <Main>
+                  {children}
+                </Main>
+              </Box>
+            </ThemeRegistry>
+          </DrawerProvider>
+        </FavoritesProvider>
       </body>
     </html>
   );
