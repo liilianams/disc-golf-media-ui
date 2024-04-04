@@ -32,10 +32,6 @@ export const useFavoriteChannels = () => {
   return context;
 };
 
-function sortByTitle(channels: Channel[]) {
-  return [...channels].sort((a, b) => a.title.localeCompare(b.title));
-}
-
 export const FavoritesProvider: React.FC<FavoritesProviderProps> = ({ children }) => {
   // const { isAuthenticated } = useAuth();
   const isAuthenticated = true;
