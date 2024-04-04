@@ -1,4 +1,4 @@
-import { Video } from '@src/models/Video';
+import { Video } from '@src/entities/Video';
 import * as React from 'react';
 import { TableCell, TableRow, Typography } from '@mui/material';
 import { formatDate } from '@src/utils/helpers';

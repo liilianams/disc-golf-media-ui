@@ -3,7 +3,7 @@
 import { Grid, Table, TableBody, TableContainer, TableHead } from '@mui/material';
 import * as React from 'react';
 import { useEffect, useMemo, useState } from 'react';
-import { Video } from '@src/models/Video';
+import { VideoResponseData } from '@src/entities/Video';
 import { areDatesEqual } from '@src/utils/helpers';
 import { useFavoriteChannels } from '@src/contexts/FavoritesContext';
 import { DateFilter } from './DateFilter';
@@ -12,8 +12,10 @@ import { FavoritesFilter } from './FavoritesFilter';
 import { DesktopTableHeaders, MobileTableHeaders } from './VideosTable/TableHeaders';
 import { DesktopTableRows, MobileTableRows } from './VideosTable/TableRows';
 import { useSmallBreakpoint } from '@src/utils/hooks';
-import Loading from '@src/components/Loading';
 import Title from '@src/components/Title';
+import { convertToSortedVideoEntities } from '@src/entities/video-helpers';
+import { ChannelResponseData } from '@src/entities/Channel';
+import { convertToChannelEntities } from '@src/entities/channel-helpers';
 
 type FiltersStateProps = {
   selectedDate: Date | null;
@@ -21,51 +23,33 @@ type FiltersStateProps = {
   showFavorites: boolean;
 }
 
-const sortByDate = (data: Video[]) => {
-  return data.sort((a, b) => {
-    return new Date(b.publishedDate).valueOf() - new Date(a.publishedDate).valueOf();
-  });
-};
+type VideosProps = {
+  initialVideos: VideoResponseData[];
+  initialChannels: ChannelResponseData[];
+}
 
-const Videos: React.FC = () => {
-  // const { isAuthenticated, isLoadingAuth } = useAuth();
+const Videos: React.FC<VideosProps> = ({ initialVideos, initialChannels }) => {
+  // const { isAuthenticated } = useAuth();
+  const videos = convertToSortedVideoEntities(initialVideos);
+  const favoriteChannels = convertToChannelEntities(initialChannels);
   const isAuthenticated = true;
-  const isLoadingAuth = false;
   const {
-    favoriteChannels,
-    isLoadingChannels,
     isChannelFavorite,
     addFavoriteChannel,
     removeFavoriteChannel
-  } = useFavoriteChannels();
-  const [videos, setVideos] = useState<Video[]>([]);
-  const [isLoadingVideos, setIsLoadingVideos] = useState<boolean>(true);
+  } = useFavoriteChannels(); // TODO: Get rid of this context, use channel-helpers.ts instead.
   const [filters, setFilters] = useState<FiltersStateProps>({
     selectedDate: null,
     searchTerm: '',
     showFavorites: isAuthenticated && favoriteChannels.length > 0,
   });
   const isSmallScreen = useSmallBreakpoint();
-  const isLoading = useMemo(() => (isLoadingVideos || isLoadingAuth || isLoadingChannels),
-    [isLoadingVideos, isLoadingAuth, isLoadingChannels]);
 
+  // TODO: is this useEffect really needed?
   useEffect(() => {
-    if (!isLoading) {
-      setFilters({ ...filters, showFavorites: isAuthenticated && favoriteChannels.length > 0 });
-    }
+    setFilters({ ...filters, showFavorites: isAuthenticated && favoriteChannels.length > 0 });
     // eslint-disable-next-line
-  }, [isLoading, isAuthenticated]);
-
-  useEffect(() => {
-    const fetchVideos = async () => {
-      // const response = await getVideos();
-      // const sorted = sortByDate(response.map((video: VideoResponseData) => new Video(video)));
-      // setVideos(sorted);
-      setIsLoadingVideos(false);
-    };
-
-    void fetchVideos();
-  }, []);
+  }, [isAuthenticated]);
 
   const filteredVideos = useMemo(() => {
     return videos.filter((video) => {
@@ -82,10 +66,6 @@ const Videos: React.FC = () => {
       return includesSelectedDate && includesSearchTerm;
     });
   }, [favoriteChannels, filters, videos]);
-
-  if (isLoading) {
-    return <Loading/>;
-  }
 
   const handleDateChange = (date: Date | null) => {
     setFilters({ ...filters, selectedDate: date });

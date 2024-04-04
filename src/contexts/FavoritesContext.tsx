@@ -1,7 +1,7 @@
 'use client';
 
 import React, { createContext, ReactNode, useContext, useEffect, useState } from 'react';
-import { Channel } from '../models/Channel';
+import { Channel } from '@src/entities/Channel';
 
 const pendingChangesActions = {
   ADD: 'add',
