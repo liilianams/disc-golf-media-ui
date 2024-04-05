@@ -1,7 +1,8 @@
 'use client';
 
 import React, { createContext, ReactNode, useContext, useEffect, useState } from 'react';
-import { Channel } from '@src/entities/Channel';
+import { Channel, ChannelResponseData } from '@src/entities/Channel';
+import { convertToChannelEntities, deleteChannels, saveChannels } from '@src/entities/channel-helpers';
 
 const pendingChangesActions = {
   ADD: 'add',
@@ -12,13 +13,13 @@ const delay = 5000;
 
 type FavoritesContextType = {
   favoriteChannels: Channel[];
-  isLoadingChannels: boolean;
   addFavoriteChannel: (channelId: string, channelTitle: string) => void;
   removeFavoriteChannel: (channelId: string) => void;
   isChannelFavorite: (channelId: string) => boolean;
 }
 
 type FavoritesProviderProps = {
+  initialChannels: ChannelResponseData[];
   children: ReactNode;
 }
 
@@ -32,45 +33,32 @@ export const useFavoriteChannels = () => {
   return context;
 };
 
-export const FavoritesProvider: React.FC<FavoritesProviderProps> = ({ children }) => {
+export const FavoritesProvider: React.FC<FavoritesProviderProps> = ({ initialChannels, children }) => {
   // const { isAuthenticated } = useAuth();
   const isAuthenticated = true;
-  const [favoriteChannels, setFavoriteChannels] = useState<Channel[]>([]);
-  const [isLoadingChannels, setIsLoadingChannels] = useState<boolean>(true);
+  const [favoriteChannels, setFavoriteChannels] = useState<Channel[]>(convertToChannelEntities(initialChannels));
   const [pendingChanges, setPendingChanges] = useState<{
     add: Set<string>,
     remove: Set<string>
   }>({ add: new Set([]), remove: new Set([]) });
 
-  const fetchFavoriteChannels = async () => {
-    // const response = await getChannels(isAuthenticated);
-    // const sorted = sortByTitle(response.map((channel: ChannelResponseData) => new Channel(channel)));
-    // setFavoriteChannels(sorted);
-  };
-
   useEffect(() => {
-    if (isAuthenticated) {
-      void fetchFavoriteChannels();
-    } else {
-      setFavoriteChannels([]);
-    }
-    setIsLoadingChannels(false);
-    // eslint-disable-next-line
-  }, [isAuthenticated]);
+    const { add, remove } = pendingChanges;
 
-  useEffect(() => {
-    const postAndDeleteChannels = () => {
-      const { add, remove } = pendingChanges;
-      // void saveChannels(isAuthenticated, add);
-      // void deleteChannels(isAuthenticated, remove);
+    const saveAndDeleteChannels = async () => {
+      if (add.size > 0) {
+        void saveChannels(Array.from(add));
+      }
+      if (remove.size > 0) {
+        void deleteChannels(Array.from(remove));
+      }
     };
 
     const timer = setTimeout(() => {
-      postAndDeleteChannels();
+      void saveAndDeleteChannels();
     }, delay);
 
     return () => clearTimeout(timer);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pendingChanges]);
 
   const isChannelFavorite = (channelId: string) => {
@@ -119,7 +107,7 @@ export const FavoritesProvider: React.FC<FavoritesProviderProps> = ({ children }
 
   return (
     <FavoritesContext.Provider
-      value={{ addFavoriteChannel, favoriteChannels, isLoadingChannels, removeFavoriteChannel, isChannelFavorite }}>
+      value={{ addFavoriteChannel, favoriteChannels, removeFavoriteChannel, isChannelFavorite }}>
       {children}
     </FavoritesContext.Provider>
   );

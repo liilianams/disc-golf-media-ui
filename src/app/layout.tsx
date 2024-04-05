@@ -9,18 +9,20 @@ import Main from '@src/components/Main';
 import { DrawerProvider } from '@src/contexts/DrawerContext';
 import ThemeRegistry from '@src/components/ThemeRegistry';
 import { FavoritesProvider } from '@src/contexts/FavoritesContext';
+import { getChannels } from '@src/entities/channel-helpers';
 
 export const metadata: Metadata = {
   title: "Disc Golf Media",
   description: "Disc Golf Media",
 };
 
-const RootLayout = ({ children }: { children: ReactNode }) => {
+const RootLayout = async ({ children }: { children: ReactNode }) => {
+  const initialChannels = await getChannels();
   return (
     <html lang="en">
       <head/>
       <body>
-        <FavoritesProvider>
+        <FavoritesProvider initialChannels={initialChannels}>
           <DrawerProvider>
             <ThemeRegistry>
               <Box sx={{ display: 'flex' }}>

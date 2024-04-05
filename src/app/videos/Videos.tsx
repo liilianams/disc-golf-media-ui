@@ -37,7 +37,7 @@ const Videos: React.FC<VideosProps> = ({ initialVideos, initialChannels }) => {
     isChannelFavorite,
     addFavoriteChannel,
     removeFavoriteChannel
-  } = useFavoriteChannels(); // TODO: Get rid of this context, use channel-helpers.ts instead.
+  } = useFavoriteChannels(); // TODO: Get rid of this context, use channels-helpers.ts instead.
   const [filters, setFilters] = useState<FiltersStateProps>({
     selectedDate: null,
     searchTerm: '',

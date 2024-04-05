@@ -10,11 +10,11 @@ const sortByDate = (data: Video[]) => {
 
 export const convertToSortedVideoEntities = (data: VideoResponseData[]): Video[] => {
   return sortByDate(data.map((video) => new Video(video)));
-}
+};
 
-// TODO: get actual data from the backend
 export const getVideos = async (): Promise<VideoResponseData[]> => {
   if (process.env.NODE_ENV === ENV.DEVELOPMENT) {
     return mockVideos.data;
   }
+  return [];
 }
