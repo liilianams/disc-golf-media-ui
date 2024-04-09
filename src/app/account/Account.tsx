@@ -26,10 +26,10 @@ const Account: React.FC = () => {
   const user = mockUser.data;
 
   const handleDeleteAccount = async () => {
-    // const response = await deleteAccount();
-    // if (response) {
-    //   setErrorMessage(response.data);
-    // }
+    const response = { data: 'data' }; //await deleteAccount();
+    if (response) {
+      setErrorMessage(response.data);
+    }
     setOpenModal(false);
   };
 
