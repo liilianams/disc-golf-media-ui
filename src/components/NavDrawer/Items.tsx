@@ -7,6 +7,7 @@ import { useState } from 'react';
 import { useSmallBreakpoint } from '@src/utils/hooks';
 import { convertDisplayStringToIdString } from '@src/utils/helpers';
 import { useDrawer } from '@src/contexts/DrawerContext';
+import { LogoutModal } from '@src/components/LogOutModal';
 
 type RouteItem = {
   href?: string;
@@ -88,7 +89,7 @@ const SecondaryItems: React.FC<ItemProps> = ({ isAuthenticated, isOpen }) => {
           onClick={route.onClick}
         />
       ))}
-      {/*<LogoutModal open={openLogoutModal} onClose={setOpenLogoutModal}/>*/}
+      <LogoutModal open={openLogoutModal} onClose={setOpenLogoutModal}/>
     </>
   );
 };
