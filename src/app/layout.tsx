@@ -4,7 +4,7 @@ import * as React from 'react';
 import { ReactNode } from 'react';
 import { NavDrawer } from '@src/components/NavDrawer/NavDrawer';
 import TopBar from '@src/components/TopBar';
-import Main from '@src/components/Main';
+import Main from '@src/containers/Main';
 import { DrawerProvider } from '@src/contexts/DrawerContext';
 import ThemeRegistry from '@src/components/ThemeRegistry';
 import { FavoritesProvider } from '@src/contexts/FavoritesContext';

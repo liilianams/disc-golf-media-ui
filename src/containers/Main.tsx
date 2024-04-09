@@ -1,7 +1,7 @@
 import { Box, Container, Grid, Paper } from '@mui/material';
 import * as React from 'react';
 import { ReactNode } from 'react';
-import Copyright from '../components/Copyright';
+import Copyright from '@src/components/Copyright';
 
 const Main = ({ children }: { children: ReactNode }) => {
   return (
