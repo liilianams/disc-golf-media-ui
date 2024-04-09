@@ -19,22 +19,24 @@ const RootLayout = async ({ children }: { children: ReactNode }) => {
   const initialChannels = await getChannels();
   return (
     <html lang="en">
-      <head/>
-      <body>
-        <FavoritesProvider initialChannels={initialChannels}>
-          <DrawerProvider>
-            <ThemeRegistry>
-              <Box sx={{ display: 'flex' }}>
-                <TopBar/>
-                <NavDrawer/>
-                <Main>
-                  {children}
-                </Main>
-              </Box>
-            </ThemeRegistry>
-          </DrawerProvider>
-        </FavoritesProvider>
-      </body>
+    <head>
+      <script src="https://accounts.google.com/gsi/client"></script>
+    </head>
+    <body>
+      <FavoritesProvider initialChannels={initialChannels}>
+        <DrawerProvider>
+          <ThemeRegistry>
+            <Box sx={{ display: 'flex' }}>
+              <TopBar/>
+              <NavDrawer/>
+              <Main>
+                {children}
+              </Main>
+            </Box>
+          </ThemeRegistry>
+        </DrawerProvider>
+      </FavoritesProvider>
+    </body>
     </html>
   );
 };

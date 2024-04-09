@@ -9,8 +9,6 @@ export const ENV = {
   DEVELOPMENT: 'development',
 };
 
-export const SERVER_BASE_URL = 'http://localhost/api/v1';
-
 export const SMALL_SCREEN_BREAKPOINT: Breakpoint = 'sm';
 
 export const INVALID_PASSWORD_ERROR = 'Password must be 8-16 characters, ' +
