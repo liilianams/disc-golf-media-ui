@@ -3,19 +3,12 @@
 import * as React from 'react';
 import { Container, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@mui/material';
 import { Star } from '@mui/icons-material';
-import { ChannelResponseData } from '@src/entities/Channel';
-import { convertToChannelEntities } from '@src/entities/channel-helpers';
 import FavoriteIconButton from '@src/components/FavoriteIconButton';
 import { useFavoriteChannels } from '@src/contexts/FavoritesContext';
 import Title from '@src/components/Title';
 
-type FavoriteChannelsProps = {
-  initialChannels: ChannelResponseData[];
-}
-
-const FavoriteChannels: React.FC<FavoriteChannelsProps> = ({ initialChannels }) => {
-  const favoriteChannels = convertToChannelEntities(initialChannels);
-  const { removeFavoriteChannel } = useFavoriteChannels();
+const FavoriteChannels: React.FC = () => {
+  const { favoriteChannels, removeFavoriteChannel } = useFavoriteChannels();
 
   return (
     <Container maxWidth="sm">
