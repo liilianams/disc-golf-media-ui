@@ -1,5 +1,4 @@
 import type { Metadata } from 'next';
-import './globals.css';
 import Box from '@mui/material/Box';
 import * as React from 'react';
 import { ReactNode } from 'react';
