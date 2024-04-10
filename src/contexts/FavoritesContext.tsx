@@ -2,7 +2,7 @@
 
 import React, { createContext, ReactNode, useContext, useEffect, useState } from 'react';
 import { Channel, ChannelResponseData } from '@src/entities/Channel';
-import { convertToChannelEntities, deleteChannels, saveChannels } from '@src/entities/channel-helpers';
+import { convertToChannelEntities, deleteChannels, saveChannels } from '@src/utils/channel-helpers';
 
 const pendingChangesActions = {
   ADD: 'add',

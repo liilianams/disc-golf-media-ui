@@ -17,12 +17,11 @@ export const getChannels = async (): Promise<ChannelResponseData[]> => {
 
   try {
     const response = await fetch(
-      `${process.env.SERVER_BASE_URL}/users/channels`,
+      'api/users/channels',
       {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
-          referer: process.env.CLIENT_DOMAIN!,
         },
       },
     );

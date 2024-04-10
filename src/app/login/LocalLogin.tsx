@@ -3,9 +3,11 @@
 import { Alert, Box, Button, Link } from '@mui/material';
 import * as React from 'react';
 import { useCallback, useEffect, useState } from 'react';
-import { ENV, INVALID_EMAIL_ERROR, INVALID_PASSWORD_ERROR } from '@src/utils/constants';
+import { INVALID_EMAIL_ERROR, INVALID_PASSWORD_ERROR } from '@src/utils/constants';
 import { validateEmail, validatePassword } from '@src/utils/helpers';
 import { InputFormTextField } from '@src/components/InputFormTextField';
+import { login } from '@src/utils/auth-helper';
+import { useRouter } from 'next/navigation';
 
 const delay = 1000;
 
@@ -14,6 +16,8 @@ const LocalLogin: React.FC = () => {
   const [password, setPassword] = React.useState('');
   const [validationErrors, setValidationErrors] = useState({ email: '', password: '' });
   const [errorMessage, setErrorMessage] = React.useState('');
+
+  const router = useRouter();
 
   const validateFields = useCallback(() => {
     const errors = {
@@ -48,16 +52,15 @@ const LocalLogin: React.FC = () => {
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
+
     if (canSubmit()) {
-      const response = { status: 302, data: data }; // await loginUser(data); TODO: use auth
+      const response = await login(data);
       if (response?.status === 302) {
-        if (process.env.NODE_ENV === ENV.DEVELOPMENT) {
-          localStorage.setItem('jwt', 'jwt');
-        }
-        // login(); TODO use auth
+        router.push('/videos', { replace: true });
       } else {
-        // setGoogleLoginErrorMessage(''); TODO use auth
-        setErrorMessage(response?.data);
+        // setGoogleLoginErrorMessage(''); TODO use google auth
+        const error = await response.json();
+        setErrorMessage(error);
       }
     }
   };

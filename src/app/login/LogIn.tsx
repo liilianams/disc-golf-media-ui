@@ -4,7 +4,6 @@ import { Divider } from '@mui/material';
 import * as React from 'react';
 import { useEffect } from 'react';
 import { LocalLogin } from './LocalLogin';
-import { GoogleLogIn } from './GoogleLogIn';
 import { InputForm } from '@src/containers/InputForm';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Loading from '@src/components/Loading';
@@ -17,7 +16,7 @@ const LogIn: React.FC = () => {
 
   useEffect(() => {
     if (!isLoadingAuth && isAuthenticated) {
-      router.push('/', { replace: true });
+      router.push('/videos', { replace: true });
     }
   }, [isLoadingAuth, isAuthenticated, router]);
 
@@ -27,7 +26,7 @@ const LogIn: React.FC = () => {
 
   return (
     <InputForm pageTitle={'Log In'} icon={<LockOutlinedIcon/>}>
-      <GoogleLogIn/>
+      {/*<GoogleLogIn/>*/}
       <Divider sx={{ color: 'grey.500' }}>or</Divider>
       <LocalLogin/>
     </InputForm>

@@ -13,7 +13,7 @@ import { DesktopTableHeaders, MobileTableHeaders } from './VideosTable/TableHead
 import { DesktopTableRows, MobileTableRows } from './VideosTable/TableRows';
 import { useSmallBreakpoint } from '@src/utils/hooks';
 import Title from '@src/components/Title';
-import { convertToSortedVideoEntities } from '@src/entities/video-helpers';
+import { convertToSortedVideoEntities } from '@src/utils/video-helpers';
 
 type FiltersStateProps = {
   selectedDate: Date | null;

@@ -92,4 +92,25 @@ const convertDisplayStringToIdString = (displayString: string): string => {
   return displayString.replace(/\s+/g, '').toLowerCase();
 };
 
-export { areDatesEqual, formatDate, formatDateTime, validateEmail, validatePassword, convertDisplayStringToIdString };
+/**
+ * Takes a string and returns the string with the first letter converted to lowercase.
+ * This function does not modify other parts of the string.
+ *
+ * @param {string} inputString - The string to be modified.
+ * @returns {string} The modified string with the first letter in lowercase.
+ *
+ * @example
+ * // returns 'hello World'
+ * lowercaseFirstLetter('Hello World');
+ */
+const lowercaseFirstLetter = (inputString: string): string => inputString.charAt(0).toLowerCase() + inputString.slice(1);
+
+export {
+  areDatesEqual,
+  formatDate,
+  formatDateTime,
+  validateEmail,
+  validatePassword,
+  convertDisplayStringToIdString,
+  lowercaseFirstLetter
+};
