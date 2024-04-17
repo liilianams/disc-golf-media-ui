@@ -7,6 +7,7 @@ import { DRAWER_WIDTH, SMALL_SCREEN_BREAKPOINT } from '@src/utils/constants';
 import { PrimaryItems, SecondaryItems } from './Items';
 import { useSmallBreakpoint } from '@src/utils/hooks';
 import { useDrawer } from '@src/contexts/DrawerContext';
+import { useAuth } from '@src/contexts/AuthContext';
 
 const DrawerStyled = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' })(
   ({ theme, open }) => ({
@@ -35,7 +36,7 @@ const DrawerStyled = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== '
 );
 
 const NavDrawer: React.FC = () => {
-  // const { isAuthenticated } = useAuth();
+  const { isAuthenticated } = useAuth();
   const { isOpen, onToggleDrawer } = useDrawer();
   const isSmallScreen = useSmallBreakpoint();
 
@@ -51,12 +52,12 @@ const NavDrawer: React.FC = () => {
       >
       </Toolbar>
       <List component="nav">
-        <PrimaryItems isAuthenticated={true}/>
+        <PrimaryItems isAuthenticated={isAuthenticated}/>
       </List>
       <Box component="nav" sx={{ position: 'absolute', bottom: '0', mb: 1, width: '100%' }}>
         <Divider/>
         <List component="nav">
-          <SecondaryItems isAuthenticated={true} isOpen={isOpen}/>
+          <SecondaryItems isAuthenticated={isAuthenticated} isOpen={isOpen}/>
         </List>
       </Box>
     </>

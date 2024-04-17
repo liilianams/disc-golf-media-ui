@@ -3,6 +3,8 @@
 import React, { Dispatch, SetStateAction } from 'react';
 import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@mui/material';
 import { useDrawer } from '@src/contexts/DrawerContext';
+import { useRouter } from 'next/navigation';
+import { logout } from '@src/utils/auth-helper';
 
 type LogoutModalProps = {
   open: boolean;
@@ -11,11 +13,11 @@ type LogoutModalProps = {
 
 const LogoutModal: React.FC<LogoutModalProps> = ({ open, onClose }) => {
   const { onToggleDrawer } = useDrawer();
-  // const { logout } = useAuth();
+  const router = useRouter();
 
-  const handleLogout = () => {
-    // logout();
-    onClose(false);
+  const handleLogout = async () => {
+    await logout();
+    router.push('/videos');
     onToggleDrawer();
   };
 

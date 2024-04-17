@@ -14,6 +14,7 @@ import { DesktopTableRows, MobileTableRows } from './VideosTable/TableRows';
 import { useSmallBreakpoint } from '@src/utils/hooks';
 import Title from '@src/components/Title';
 import { convertToSortedVideoEntities } from '@src/utils/video-helpers';
+import { useAuth } from '@src/contexts/AuthContext';
 
 type FiltersStateProps = {
   selectedDate: Date | null;
@@ -26,9 +27,8 @@ type VideosProps = {
 }
 
 const Videos: React.FC<VideosProps> = ({ initialVideos }) => {
-  // const { isAuthenticated } = useAuth();
+  const { isAuthenticated } = useAuth();
   const videos = convertToSortedVideoEntities(initialVideos);
-  const isAuthenticated = true;
   const {
     favoriteChannels,
     isChannelFavorite,

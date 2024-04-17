@@ -5,6 +5,7 @@ import { formatDate } from '@src/utils/helpers';
 import { Star, StarBorder } from '@mui/icons-material';
 import { useFavoriteChannels } from '@src/contexts/FavoritesContext';
 import FavoriteIconButton from '@src/components/FavoriteIconButton';
+import { useAuth } from '@src/contexts/AuthContext';
 
 type TableRowsProps = {
   videos: Video[];
@@ -17,8 +18,7 @@ const DesktopTableRows: React.FC<TableRowsProps> = ({
   handleVideoTitleClick,
   handleFavoriteIconClick
 }) => {
-  // const { isAuthenticated } = useAuth();
-  const isAuthenticated = true;
+  const { isAuthenticated } = useAuth();
   const { isChannelFavorite } = useFavoriteChannels();
 
   return (
@@ -60,8 +60,7 @@ const MobileTableRows: React.FC<TableRowsProps> = ({
   handleVideoTitleClick,
   handleFavoriteIconClick
 }) => {
-  // const { isAuthenticated } = useAuth();
-  const isAuthenticated = true;
+  const { isAuthenticated } = useAuth();
   const { isChannelFavorite } = useFavoriteChannels();
 
   return (

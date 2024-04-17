@@ -1,7 +1,9 @@
+'use client';
+
 import * as React from 'react';
 import FavoriteChannels from '@src/app/favorites/FavoriteChannels';
 
-const FavoriteChannelsPage = async () => {
+const FavoriteChannelsPage = () => {
   return (
     <FavoriteChannels/>
   );

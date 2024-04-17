@@ -1,12 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { cookies } from 'next/headers';
 import { lowercaseFirstLetter } from '@src/utils/helpers';
-
-const sampleCookies = [
-  'jwt_token=eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI4IiwiaWF0IjoxNzEyNzAzNTg1LCJleHAiOjE3MTI3MDcxODV9.3x0b-PmXJmZCck2qLt3IG43lbf_Ul-Xbwd6sUx_fVEc; Path=/; HttpOnly; SameSite=Strict;',
-  'jwt_token2=some-jwt-token-2; Path=/; HttpOnly; SameSite=lax;'
-];
-
+import { ENV } from '@src/utils/constants';
 
 const extractAndSetJwtToken = (cookieStrings: string[]): void => {
   cookieStrings.forEach(cookieString => {
@@ -31,6 +26,11 @@ const extractAndSetJwtToken = (cookieStrings: string[]): void => {
 };
 
 export const POST = async (request: NextRequest): Promise<NextResponse> => {
+  if (process.env.NODE_ENV === ENV.DEVELOPMENT) {
+    extractAndSetJwtToken(['jwt_token=test_token; Path=/; HttpOnly; SameSite=Strict;']);
+    return NextResponse.json('Success', { status: 302 });
+  }
+
   const body = await request.json();
   try {
     const response = await fetch(

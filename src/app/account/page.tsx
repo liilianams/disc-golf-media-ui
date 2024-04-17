@@ -1,10 +1,14 @@
+'use client';
+
 import * as React from 'react';
 import Account from '@src/app/account/Account';
+import mockUser from '@src/mocks/users.json';
 
-const VideosPage = async () => {
+const AccountPage = () => {
+  const user = mockUser.data;
   return (
-    <Account />
+    <Account user={user}/>
   );
 };
 
-export default VideosPage;
+export default AccountPage;

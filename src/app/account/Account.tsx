@@ -16,14 +16,16 @@ import {
   Divider
 } from '@mui/material';
 import { AccountCircle, Email } from '@mui/icons-material';
-import mockUser from '@src/mocks/users.json';
 import Title from '@src/components/Title';
+import { User } from '@src/entities/User';
 
-const Account: React.FC = () => {
+type AccountProps = {
+  user: User;
+}
+
+const Account: React.FC<AccountProps> = ({ user }) => {
   const [openModal, setOpenModal] = React.useState<boolean>(false);
   const [errorMessage, setErrorMessage] = React.useState<string>('');
-  // const { user, deleteAccount } = useAuth();
-  const user = mockUser.data;
 
   const handleDeleteAccount = async () => {
     const response = { data: 'data' }; //await deleteAccount();

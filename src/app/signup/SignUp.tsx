@@ -12,8 +12,6 @@ import {
 import { validateEmail, validatePassword } from '@src/utils/helpers';
 import { PersonAdd } from '@mui/icons-material';
 import Check from '@mui/icons-material/Check';
-import { useRouter } from 'next/navigation';
-import Loading from '@src/components/Loading';
 import { InputFormTextField } from '@src/components/InputFormTextField';
 
 const delay = 1500;
@@ -31,15 +29,6 @@ const SignUp: React.FC = () => {
   });
   const [displaySuccess, setDisplaySuccess] = React.useState(false);
   const [errorMessage, setErrorMessage] = React.useState('');
-  const isAuthenticated = false; // TODO: replace with auth
-  const isLoadingAuth = false; // TODO: replace with auth
-  const router = useRouter();
-
-  useEffect(() => {
-    if (isAuthenticated) {
-      router.push('/');
-    }
-  }, [isAuthenticated, router]);
 
   const validateFields = useCallback(() => {
     setErrors({
@@ -74,10 +63,6 @@ const SignUp: React.FC = () => {
       }
     }
   };
-
-  if (isAuthenticated || isLoadingAuth) {
-    return <Loading/>;
-  }
 
   return (
     <InputForm pageTitle="Sign Up" icon={<PersonAdd/>}>

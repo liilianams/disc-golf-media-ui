@@ -56,7 +56,7 @@ const LocalLogin: React.FC = () => {
     if (canSubmit()) {
       const response = await login(data);
       if (response?.status === 302) {
-        router.push('/videos', { replace: true });
+        router.back();
       } else {
         // setGoogleLoginErrorMessage(''); TODO use google auth
         const error = await response.json();
