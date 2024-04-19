@@ -3,6 +3,7 @@
 import React, { createContext, ReactNode, useContext, useEffect, useState } from 'react';
 import { checkAuth } from '@src/utils/auth-helper';
 import { useRouter } from 'next/navigation';
+import { useStore } from '@src/store/useStore';
 
 type AuthContextType = {
   isAuthenticated: boolean;
@@ -25,18 +26,15 @@ const useAuth = (): AuthContextType => {
 };
 
 const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const isAuthenticated = useStore((state) => state.isAuthenticated);
   const [isLoadingAuth, setIsLoadingAuth] = useState(true);
   const router = useRouter();
 
   const verifyToken = async () => {
     try {
       const isAuthenticated = await checkAuth();
-      if (isAuthenticated) {
-        setIsAuthenticated(true);
-      } else {
-        setIsAuthenticated(false);
-        router.push('/login')
+      if (!isAuthenticated) {
+        router.push('/login');
       }
       setIsLoadingAuth(false);
     } catch (error) {

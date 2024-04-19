@@ -8,6 +8,7 @@ import { validateEmail, validatePassword } from '@src/utils/helpers';
 import { InputFormTextField } from '@src/components/InputFormTextField';
 import { login } from '@src/utils/auth-helper';
 import { useRouter } from 'next/navigation';
+import { useStore } from '@src/store/useStore';
 
 const delay = 1000;
 
@@ -16,6 +17,7 @@ const LocalLogin: React.FC = () => {
   const [password, setPassword] = React.useState('');
   const [validationErrors, setValidationErrors] = useState({ email: '', password: '' });
   const [errorMessage, setErrorMessage] = React.useState('');
+  const setIsAuthenticated = useStore((state) => state.setIsAuthenticated);
 
   const router = useRouter();
 
@@ -56,7 +58,8 @@ const LocalLogin: React.FC = () => {
     if (canSubmit()) {
       const response = await login(data);
       if (response?.status === 302) {
-        router.back();
+        setIsAuthenticated(true);
+        router.push('/videos');
       } else {
         // setGoogleLoginErrorMessage(''); TODO use google auth
         const error = await response.json();

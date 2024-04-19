@@ -44,7 +44,7 @@ export const login = async (formData: FormData): Promise<NextResponse> => {
 
 export const logout = async (): Promise<void> => {
   try {
-    const response = await fetch(
+    await fetch(
       `api/auth/logout`,
       {
         method: 'POST',
@@ -53,10 +53,7 @@ export const logout = async (): Promise<void> => {
         },
       },
     );
-
-    const responseBody = await response.json();
-    return NextResponse.json(responseBody, { status: response.status });
   } catch (error) {
-    return NextResponse.json('Error logging in with username and password', { status: 500 });
+    console.error('Error logging out');
   }
 }

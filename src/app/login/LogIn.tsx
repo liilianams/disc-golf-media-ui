@@ -5,11 +5,11 @@ import * as React from 'react';
 import { LocalLogin } from './LocalLogin';
 import { InputForm } from '@src/containers/InputForm';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import { useAuth } from '@src/contexts/AuthContext';
 import { useRouter } from 'next/navigation';
+import { useStore } from '@src/store/useStore';
 
 const LogIn: React.FC = () => {
-  const { isAuthenticated } = useAuth();
+  const isAuthenticated = useStore((state) => state.isAuthenticated);
   const router = useRouter();
 
   if (isAuthenticated) {

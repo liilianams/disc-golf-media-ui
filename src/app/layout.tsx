@@ -10,6 +10,7 @@ import ThemeRegistry from '@src/components/ThemeRegistry';
 import { FavoritesProvider } from '@src/contexts/FavoritesContext';
 import { getChannels } from '@src/utils/channel-helpers';
 import { AuthProvider } from '@src/contexts/AuthContext';
+import HydrationZustand from '@src/components/HydrationZustand';
 
 export const metadata: Metadata = {
   title: "Disc Golf Media",
@@ -25,8 +26,9 @@ const RootLayout = async ({ children }: { children: ReactNode }) => {
       <script src="https://accounts.google.com/gsi/client" async/>
     </head>
     <body>
-      <AuthProvider>
-        <FavoritesProvider initialChannels={initialChannels}>
+      <HydrationZustand>
+        <AuthProvider>
+          <FavoritesProvider initialChannels={initialChannels}>
             <ThemeRegistry>
               <Box sx={{ display: 'flex' }}>
                 <DrawerProvider>
@@ -38,8 +40,9 @@ const RootLayout = async ({ children }: { children: ReactNode }) => {
                 </Main>
               </Box>
             </ThemeRegistry>
-        </FavoritesProvider>
-      </AuthProvider>
+          </FavoritesProvider>
+        </AuthProvider>
+      </HydrationZustand>
     </body>
     </html>
   );

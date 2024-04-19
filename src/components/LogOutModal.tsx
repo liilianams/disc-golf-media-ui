@@ -5,6 +5,7 @@ import { Button, Dialog, DialogActions, DialogContent, DialogContentText, Dialog
 import { useDrawer } from '@src/contexts/DrawerContext';
 import { useRouter } from 'next/navigation';
 import { logout } from '@src/utils/auth-helper';
+import { useStore } from '@src/store/useStore';
 
 type LogoutModalProps = {
   open: boolean;
@@ -12,13 +13,18 @@ type LogoutModalProps = {
 }
 
 const LogoutModal: React.FC<LogoutModalProps> = ({ open, onClose }) => {
+  const setIsAuthenticated = useStore((state) => state.setIsAuthenticated);
   const { onToggleDrawer } = useDrawer();
   const router = useRouter();
 
   const handleLogout = async () => {
     await logout();
+    setIsAuthenticated(false);
+    if (!open) {
+      onToggleDrawer();
+    }
+    onClose(false);
     router.push('/videos');
-    onToggleDrawer();
   };
 
   return (
