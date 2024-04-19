@@ -1,6 +1,6 @@
 'use client';
 
-import React, { createContext, ReactNode, useContext, useState } from 'react';
+import React, { createContext, ReactNode, useContext, useEffect, useState } from 'react';
 import { checkAuth } from '@src/utils/auth-helper';
 import { useRouter } from 'next/navigation';
 
@@ -30,7 +30,6 @@ const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const router = useRouter();
 
   const verifyToken = async () => {
-    console.log('Verifying token');
     try {
       const isAuthenticated = await checkAuth();
       if (isAuthenticated) {
@@ -40,12 +39,15 @@ const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         router.push('/login')
       }
       setIsLoadingAuth(false);
-      console.log('Auth isAuthenticated: ', isAuthenticated);
-      console.log('Auth isLoadingAuth: ', isLoadingAuth);
     } catch (error) {
       console.error(error);
     }
   };
+
+  useEffect(() => {
+    void verifyToken();
+    // eslint-disable react-hooks/exhaustive-deps
+  }, [isAuthenticated]);
 
   return (
     <AuthContext.Provider value={{ isAuthenticated, isLoadingAuth, verifyToken }}>
