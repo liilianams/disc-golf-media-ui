@@ -28,19 +28,19 @@ const RootLayout = async ({ children }: { children: ReactNode }) => {
     <body>
       <HydrationZustand>
         <AuthProvider>
-          <FavoritesProvider initialChannels={initialChannels}>
             <ThemeRegistry>
               <Box sx={{ display: 'flex' }}>
                 <DrawerProvider>
                   <TopBar/>
                   <NavDrawer/>
                 </DrawerProvider>
-                <Main>
-                  {children}
-                </Main>
+                <FavoritesProvider initialChannels={initialChannels}>
+                  <Main>
+                    {children}
+                  </Main>
+                </FavoritesProvider>
               </Box>
             </ThemeRegistry>
-          </FavoritesProvider>
         </AuthProvider>
       </HydrationZustand>
     </body>

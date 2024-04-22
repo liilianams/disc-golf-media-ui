@@ -1,9 +1,9 @@
 import React from 'react';
 import { TableCell, TableRow } from '@mui/material';
-import { useAuth } from '@src/contexts/AuthContext';
+import { useStore } from '@src/store/useStore';
 
 const DesktopTableHeaders: React.FC = () => {
-  const { isAuthenticated } = useAuth();
+  const isAuthenticated = useStore((state) => state.isAuthenticated);
   return (
     <TableRow>
       <TableCell sx={{ width: '120px ' }}>Published</TableCell>
@@ -15,7 +15,7 @@ const DesktopTableHeaders: React.FC = () => {
 };
 
 const MobileTableHeaders: React.FC = () => {
-  const { isAuthenticated } = useAuth();
+  const isAuthenticated = useStore((state) => state.isAuthenticated);
   return (
     <TableRow>
       <TableCell padding="none">Date</TableCell>

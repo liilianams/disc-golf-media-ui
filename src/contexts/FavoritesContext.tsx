@@ -3,6 +3,7 @@
 import React, { createContext, ReactNode, useContext, useEffect, useState } from 'react';
 import { Channel, ChannelResponseData } from '@src/entities/Channel';
 import { convertToChannelEntities, deleteChannels, saveChannels } from '@src/utils/channel-helpers';
+import { useStore } from '@src/store/useStore';
 
 const pendingChangesActions = {
   ADD: 'add',
@@ -34,8 +35,7 @@ export const useFavoriteChannels = () => {
 };
 
 export const FavoritesProvider: React.FC<FavoritesProviderProps> = ({ initialChannels, children }) => {
-  // const { isAuthenticated } = useAuth();
-  const isAuthenticated = true;
+  const isAuthenticated = useStore((state) => state.isAuthenticated);
   const [favoriteChannels, setFavoriteChannels] = useState<Channel[]>(convertToChannelEntities(initialChannels));
   const [pendingChanges, setPendingChanges] = useState<{
     add: Set<string>,

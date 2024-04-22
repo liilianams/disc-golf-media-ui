@@ -9,10 +9,10 @@ import { useSmallBreakpoint } from '../utils/hooks';
 import BasketIcon from './BasketIcon';
 import { useRouter } from 'next/navigation';
 import { useDrawer } from '@src/contexts/DrawerContext';
-import { useAuth } from '@src/contexts/AuthContext';
+import { useStore } from '@src/store/useStore';
 
 const TopBar: React.FC = () => {
-  const { isAuthenticated } = useAuth();
+  const isAuthenticated = useStore((state) => state.isAuthenticated);
   const { isOpen, onToggleDrawer } = useDrawer();
   const router = useRouter();
   const isSmallScreen = useSmallBreakpoint();
