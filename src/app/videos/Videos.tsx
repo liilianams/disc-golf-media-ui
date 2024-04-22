@@ -15,6 +15,8 @@ import { useSmallBreakpoint } from '@src/utils/hooks';
 import Title from '@src/components/Title';
 import { convertToSortedVideoEntities } from '@src/utils/video-helpers';
 import { useStore } from '@src/store/useStore';
+import { useAuth } from '@src/contexts/AuthContext';
+import Loading from '@src/components/Loading';
 
 type FiltersStateProps = {
   selectedDate: Date | null;
@@ -28,6 +30,7 @@ type VideosProps = {
 
 const Videos: React.FC<VideosProps> = ({ initialVideos }) => {
   const isAuthenticated = useStore((state) => state.isAuthenticated);
+  const { isLoadingAuth } = useAuth();
   const videos = convertToSortedVideoEntities(initialVideos);
   const {
     favoriteChannels,
@@ -96,6 +99,10 @@ const Videos: React.FC<VideosProps> = ({ initialVideos }) => {
       addFavoriteChannel(channelId, channelTitle);
     }
   };
+
+  if (isLoadingAuth) {
+    return <Loading/>
+  }
 
   return (
     <>
